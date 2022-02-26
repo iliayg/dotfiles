@@ -12,25 +12,46 @@
 :set scrolloff=7
 :set backspace=indent,eol,start
 :set colorcolumn=109
-:set pastetoggle=<F2>
+:set ic
 
-nmap <F8> :TagbarToggle<CR>
-
+let g:vdebug_keymap = {
+    \    "get_context" : "<F5>",
+    \    "run" : "<F10>",
+    \    "run_to_cursor" : "<F9>",
+    \    "step_over" : "<F2>",
+    \    "step_into" : "<F3>",
+    \    "step_out" : "<F4>",
+    \    "close" : "<F6>",
+    \    "detach" : "<F7>",
+    \    "set_breakpoint" : "<F1>",
+    \    "eval_under_cursor" : "<F12>",
+    \    "eval_visual" : "<Leader>e",
+    \}
+let g:VM_maps = {}
 let g:VM_mouse_mappings = 1
 let g:VM_theme = 'iceblue'
-
-let g:VM_maps = {}
 let g:VM_maps["Undo"] = 'u'
 let g:VM_maps["Redo"] = '<C-r>'
+let g:VM_default_mappings = 0
+let g:VM_mouse_mappings = 1
 
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-h> <c-w>h
-map <c-l> <c-w>l
-
+syntax enable
+nnoremap <C-j> <c-w>j
+nnoremap <C-k> <c-w>k
+nnoremap <C-h> <c-w>h
+nnoremap <C-l> <c-w>l
 inoremap jk <esc>
 noremap <space><esc> :nohlsearch<cr>
-syntax enable
+map <C-c> :q!<cr>
+map <C-s> :w<cr>
+
+nnoremap x "_x
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+nnoremap <leader>d ""d
+nnoremap <leader>D ""D
+vnoremap <leader>d ""d
 
 map gs :split
 map <silent> gv :vsplit
@@ -46,12 +67,28 @@ resize 10
 endfunction
 nnoremap <C-t> :call OpenTerminal()<CR>
 autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
+let g:Terminal_CWInsert = 1
+
+nnoremap <silent> <F8> :TagbarToggle<CR>
+" let g:tagbar_indent = 0
+let g:tagbar_width = max([25, winwidth(0) / 6])
+let g:tagbar_autofocus = 1
+let g:tagbar_show_data_type = 1
+let g:tagbar_show_visibility = 1
+let g:tagbar_show_linenumbers = 1
+" let g:tagbar_show_tag_linenumbers = 1
+let g:tagbar_show_tag_count = 1
+let g:tagbar_singleclick = 1
+let g:tagbar_use_cache = 0
+" let g:tagbar_wrap = 2
+let g:tagbar_scrolloff = 10
+" " autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 nnoremap <silent> <C-a> :NERDTreeToggle<CR>
 let g:NERDTreeMinimalUI = 0
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowLineNumbers = 1
-let g:NERDTreeWinSize = 24
+let g:NERDTreeWinSize = 27
 
 autocmd StdinReadPre * let s:std_in=1
 " Start NERDTree when Vim is started without file arguments.
