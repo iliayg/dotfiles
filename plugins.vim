@@ -1,53 +1,44 @@
-      " auto-install vim-plug
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
+if empty(glob('~/.config/nvim/autoload/plug.vim'))            " auto-install vim-plug
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  " autocmd VimEnter * PlugInstall
-  " autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
 call plug#begin('~/.config/nvim/autoload/plugged')
 
-    " Better Syntax Support
-    Plug 'sheerun/vim-polyglot'
-    " File Explorer 
-    "Plug '/scrooloose/NERDTree'
+    Plug 'sheerun/vim-polyglot'         " Better Syntax Support
     Plug 'https://github.com/preservim/nerdtree'
-    " Plug 'https://github.com/ryanoasis/vim-devicons'
     Plug 'https://github.com/vim-airline/vim-airline' 
-    " Auto pairs for '(' '[' '{'
-    Plug 'jiangmiao/auto-pairs'
-    "surround
+    Plug 'jiangmiao/auto-pairs'         " Auto pairs for '(' '[' '{'
     Plug 'https://github.com/tpope/vim-surround'
     Plug 'https://github.com/tpope/vim-commentary'
     Plug 'https://github.com/ap/vim-css-color'
     Plug 'https://github.com/rafi/awesome-vim-colorschemes'
     Plug 'https://github.com/tc50cal/vim-terminal'
     Plug 'https://github.com/mg979/vim-visual-multi'
+    Plug 'neovim/nvim-lsp'
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'saadparwaiz1/cmp_luasnip'
     Plug 'L3MON4D3/LuaSnip'
-    Plug 'yuezk/vim-js'
-    Plug 'maxmellon/vim-jsx-pretty'
     Plug 'https://github.com/norcalli/nvim-colorizer.lua'
     Plug 'https://github.com/danilo-augusto/vim-afterglow' 
     Plug 'https://github.com/preservim/tagbar'
-
+    Plug 'vim-vdebug/vdebug'
+    Plug 'mileszs/ack.vim'
+    Plug 'junegunn/fzf'
+    " Plug 'yuezk/vim-js'
+    " Plug 'maxmellon/vim-jsx-pretty'
 call plug#end()
-
 
 if (has("termguicolors"))
     set termguicolors
 endif
-
 lua require 'colorizer'.setup()
 
 lua << EOF
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
-
 -- luasnip setup
 local luasnip = require 'luasnip'
 
@@ -99,7 +90,6 @@ cmp.setup {
 }
 EOF
 
-
 lua << EOF
 local nvim_lsp = require('lspconfig')
 
@@ -112,10 +102,8 @@ local on_attach = function(client, bufnr)
 
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
   -- Mappings.
   local opts = { noremap=true, silent=true }
-
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -134,7 +122,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -150,20 +137,17 @@ for _, lsp in ipairs(servers) do
 end
 EOF
 
-
-
 " Delete buffer while keeping window layout (don't close buffer's windows).
 " Version 2008-11-18 from http://vim.wikia.com/wiki/VimTip165
-if v:version < 700 || exists('loaded_bclose') || &cp
-  finish
-endif
-let loaded_bclose = 1
-if !exists('bclose_multiple')
-  let bclose_multiple = 1
-endif
+" if v:version < 700 || exists('loaded_bclose') || &cp
+"   finish
+" endif
+" let loaded_bclose = 1
+" if !exists('bclose_multiple')
+"   let bclose_multiple = 1
+" endif
 
-" Display an error message.
-function! s:Warn(msg)
+function! s:Warn(msg)   " Display an error message.
   echohl ErrorMsg
   echomsg a:msg
   echohl NONE
@@ -225,12 +209,4 @@ endfunction
 command! -bang -complete=buffer -nargs=? Bclose call <SID>Bclose(<q-bang>, <q-args>)
 nnoremap <silent> <Leader>bd :Bclose<CR>
 
-
-map gn :bn<cr>
-map gp :bp<cr>
-map gw :Bclose<cr>
-
-"set colorcolumn=79
 colorscheme afterglow
-
-" let g:lspconfig = 1
