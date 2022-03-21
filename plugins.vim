@@ -210,3 +210,8 @@ command! -bang -complete=buffer -nargs=? Bclose call <SID>Bclose(<q-bang>, <q-ar
 nnoremap <silent> <Leader>bd :Bclose<CR>
 
 colorscheme afterglow
+
+highlight Visual cterm=NONE ctermbg=76 ctermfg=16 gui=NONE guibg=#2dd090 guifg=#000000
+highlight ErrorMsg cterm=NONE ctermbg=231 ctermfg=160 gui=NONE guibg=#ffffff guifg=#d70000
+highlight Search cterm=NONE ctermbg=17 gui=NONE guibg=#3f711e guifg=#ffffff
+highlight NonText cterm=NONE ctermbg=17 gui=NONE guibg=#000000
